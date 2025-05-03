@@ -3,6 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Con
 import os
 
 TOKEN = os.getenv("TOKEN")
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # آدرس دپلوی‌شده در Render
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
@@ -12,7 +13,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
     reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
     await update.message.reply_text(
-        'سلام! به ربات سالن زیبایی میترا میرزاده خوش آمدید. از منوی زیر یکی را انتخاب کنید.',
+        'سلام! به ربات سالن زیبایی میترا میرزاده خوش آمدید.',
         reply_markup=reply_markup
     )
 
@@ -45,7 +46,11 @@ def main():
     app.add_handler(MessageHandler(filters.Regex("^آدرس$"), address))
     app.add_handler(MessageHandler(filters.Regex("^سوالات متداول$"), faq))
 
-    app.run_polling()
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=int(os.environ.get("PORT", 8443)),
+        webhook_url=WEBHOOK_URL
+    )
 
 if __name__ == '__main__':
     main()
