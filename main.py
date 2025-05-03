@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, Con
 import os
 
 TOKEN = os.getenv("TOKEN")
-WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # آدرس دپلوی‌شده در Render
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # مثل: https://mybeautybot.onrender.com
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
